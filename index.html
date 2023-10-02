@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Continuous Drawing Patterns</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.js"></script>
+    <style>
+        body { display: flex; justify-content: center; align-items: center; height: 100vh; background-color: #f4f4f4; }
+    </style>
+</head>
+<body>
+    <script>
+        let yoff = 0;
+
+        function setup() {
+            createCanvas(800, 600);
+            background(220);
+        }
+
+        function draw() {
+            push();
+            translate(random(width), random(height));
+            drawRandomLoop();
+            pop();
+
+            // Increase for more fading effect
+            fill(220, 5);
+            rect(0, 0, width, height);
+        }
+
+        function drawRandomLoop() {
+            beginShape();
+            let xoff = 0;
+            for (let a = 0; a < TWO_PI; a += 0.1) {
+                let offset = map(noise(xoff, yoff), 0, 1, -25, 25);
+                let r = 50 + offset;
+                let x = r * cos(a);
+                let y = r * sin(a);
+                vertex(x, y);
+                xoff += 0.5;
+            }
+            endShape(CLOSE);
+            yoff += 0.01;
+        }
+    </script>
+</body>
+</html>
